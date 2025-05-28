@@ -19,7 +19,7 @@ app.use(cors());
 // OR allow only your frontend domain:
 app.use(
     cors({
-        origin: "https://664a1a93-c416-45f2-bccb-ef3c9e402c7f-00-1zv0o9n2mhsep.sisko.replit.dev",
+        origin: '*',
     }),
 );
 
