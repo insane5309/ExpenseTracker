@@ -1,4 +1,3 @@
-// server.js
 const express = require('express');
 const fileUpload = require('express-fileupload');
 const cors = require('cors');
@@ -6,6 +5,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const { v4: uuidv4 } = require('uuid');
 const csv = require('fast-csv');
+const pdf = require('pdf-parse');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -81,13 +81,14 @@ async function extractBankStatementData(pdfPath) {
 }
 
 // Upload endpoint
-app.post('/upload', async (req, res) => {
+app.post('/api/upload', async (req, res) => {
+    
     if (!req.files || !req.files.pdf) {
         return res.status(400).send('No PDF file uploaded.');
     }
 
     const pdfFile = req.files.pdf;
-    const uploadPath = path.join(__dirname, 'uploads', pdfFile.name);
+    const uploadPath = path.join(__dirname, pdfFile.name);
 
     try {
         await pdfFile.mv(uploadPath);
